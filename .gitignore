@@ -1,3 +1,6 @@
+__pycache__/
+.vscode/
+
 # KiCad ignore list:
 _autosave-*
 *.kicad_pcb-bak

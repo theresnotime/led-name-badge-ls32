@@ -493,7 +493,7 @@ or
         h = list(LedNameBadge._protocol_header_template)
 
         if brightness <= 25:
-            h[5] = 0x40
+            h[5] = 0x30
         elif brightness <= 50:
             h[5] = 0x20
         elif brightness <= 75:
@@ -574,7 +574,8 @@ or
             print("using [%s %s] bus=%d dev=%d" % (dev.manufacturer, dev.product, dev.bus, dev.address))
             for i in range(int(len(buf) / 64)):
                 time.sleep(0.1)
-                dev.write(1, buf[i * 64:i * 64 + 64])
+                dev.reset() # Reset device before programming again
+                dev.write(2, buf[i * 64:i * 64 + 64], 1000)
 
 
 def split_to_ints(list_str):
@@ -610,7 +611,7 @@ def main():
      Speeds [1..8] result in ca. [1.2 1.3 2.0 2.4 2.8 4.5 7.5 15] fps.
     
      Example of a slowly beating heart:
-      sudo %s -s1 -m5 "  :heart2:    :HEART2:"
+      sudo %s -s1 -m5 "  :heart2:  :HEART2:"
     
     -m 9 "Smooth"
     -m 10 "Rotate"
